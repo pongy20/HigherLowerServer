@@ -92,6 +92,13 @@ public class SQL {
     }
 
     public synchronized Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connect();  // Tries to connect to database again when connection has been lost
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 }
